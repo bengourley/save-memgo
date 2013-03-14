@@ -173,7 +173,6 @@ function createCollection(name, options) {
   function normaliseSortOptions(options) {
     var sort = options.sort
     options.$sort = {}
-  ; delete options.sort
     if (Array.isArray(options.sort)) {
       options.sort.forEach(function (prop) {
         options.$sort[prop[0]] = (prop[1] === 'desc' || prop[1] === -1) ? -1 : 1
@@ -182,7 +181,10 @@ function createCollection(name, options) {
       Object.keys(options.sort).forEach(function (key) {
         options.$sort[key] = (options.sort[key] === 'desc' || options.sort[key] === -1) ? -1 : 1
       })
+    } else if (typeof options.sort === 'string') {
+      options.$sort[options.sort] = 1
     }
+    delete options.sort
   }
 
   function find(query, options, callback) {
