@@ -7,7 +7,7 @@ var scule = require('sculejs')
 
 function createCollection(name, options) {
 
-  var collection = scule.db.factoryCollection('scule+dummy://' + name)
+  var collection = scule.factoryCollection('scule+dummy://' + name)
     , defaults = { idProperty: '_id' }
     , self = new EventEmitter()
 
@@ -64,12 +64,10 @@ function createCollection(name, options) {
 
   function read(id, callback) {
     var oId
-      , query = {}
-
     self.emit('read', id)
 
     try {
-      oId = scule.db.getObjectId(id)
+      oId = scule.getObjectId(id)
     } catch (e) {
       if (e.message === 'Argument passed in must be a single String of 12 bytes or a string of 24 hex characters') {
         return callback(undefined, undefined)
@@ -151,7 +149,7 @@ function createCollection(name, options) {
 
     self.emit('delete', id)
     var query = {}
-    query[options.idProperty] = scule.db.getObjectId(id)
+    query[options.idProperty] = scule.getObjectId(id)
     try {
       collection.remove(query, {}, function () {
         self.emit('afterDelete', id)
@@ -171,7 +169,6 @@ function createCollection(name, options) {
   }
 
   function normaliseSortOptions(options) {
-    var sort = options.sort
     options.$sort = {}
     if (Array.isArray(options.sort)) {
       options.sort.forEach(function (prop) {
