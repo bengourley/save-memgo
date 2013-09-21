@@ -1,10 +1,11 @@
 {
   "name": "save-memgo",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Save engine that mocks the mongo API using a memory store",
   "main": "memgo.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha -R spec"
+    "predef": "./node_modules/.bin/jshint .",
+    "test": "./node_modules/.bin/mocha -r should -R spec"
   },
   "repository": "",
   "keywords": [
@@ -13,13 +14,14 @@
     "save"
   ],
   "author": "Ben Gourley",
-  "license": "BSD",
+  "license": "New BSD",
   "devDependencies": {
-    "save": "0.0.16",
-    "should": "~1.2.2",
-    "mocha": "~1.8.2"
+    "save": "*",
+    "should": "*",
+    "mocha": "*",
+    "jshint": "*"
   },
   "dependencies": {
-    "sculejs": "git://github.com/dan-eyles/sculejs.git"
+    "sculejs": "~0.1.2"
   }
 }
